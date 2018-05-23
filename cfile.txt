@@ -1,0 +1,7 @@
+1 2 Do you segregate waste?.
+3 4 Did you trash non-biodegradable trash today?.
+5 6 Did you waste food today?.
+1 3 Do you know how many kids die of starvation in Africa?.
+1 0 Do you see people throwing food around you everyday?.
+1 1 Do you do your bit?.
+2 2 Are you happy with your life?.
