@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+	<title>Reduce, Reuse, Recycle- Trash Canada</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="nodeServer.js"></script>
+
+	<style type="text/css">
+		body { width: 100%; margin: 0 auto; text-align: center; margin-top: 20px; 
+                background-image: url("https://orig00.deviantart.net/8538/f/2007/087/4/f/sonny__irobot_by_underexaggerated.jpg");
+				background-size : 1000px;
+                }
+		/*div {  position: absolute; }*/
+		input { width: 400px; }
+		.button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 15px;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #4169e1;
+                background-color: white;
+                border: none;
+                border-radius: 12px;
+                box-shadow: 0 4px #999;
+                }
+                .button:hover {background-color: #8470ff}
+                .button:active {
+                background-color: #8470ff;
+                box-shadow: 0 5px #666;
+                transform: translateY(4px); 
+                }
+		textarea { width: 30%; background-color: beige; border-color: burlywood; border-width: 10px}
+
+</style>
+</head>
+<body>
+	<div>
+                <img src="https://image.freepik.com/free-icon/waste-can-full-of-trash_318-44388.jpg" alt="trash_talk" style="width:200px;height:100px" align = "left"><br/>
+                <textarea id="input"></textarea> <button id="rec" class="button">Speak</button>
+		<br/>
+                 
+                <h1 style="font-size:300%;text-align:center;font-family:Broadway;color:white">Response</h1>
+                <br/> <textarea id="response" cols="40" rows="20"></textarea>
+		<button class="button"> I'm done! </button>
+	</div>
+		
+
+		<script type="text/javascript">
+	
+	
+
+	var accessToken = "09774994a7a3472fa046ae4724745d32";
+		var baseUrl = "https://api.api.ai/v1/";
+		  
+		<!-- -->
+		var transcript = ["This is a transcript"];
+		<!-- -->
+		
+		$(document).ready(function() {
+			$("#input").keypress(function(event) {
+				if (event.which == 13) {
+					event.preventDefault();
+					send();
+				}
+			}); 
+			$("#rec").click(function(event) {
+				switchRecognition();
+			});
+		});
+		var recognition;
+		function startRecognition() {
+			recognition = new webkitSpeechRecognition();
+			recognition.onstart = function(event) {
+				updateRec();
+			};
+			recognition.onresult = function(event) {
+				var text = "";
+			    for (var i = event.resultIndex; i < event.results.length; ++i) {
+			    	text += event.results[i][0].transcript;
+			    }
+			    setInput(text);
+				stopRecognition();
+			};
+			recognition.onend = function() {
+				stopRecognition();
+			};
+			recognition.lang = "en-US";
+			recognition.start();
+		}
+	
+		function stopRecognition() {
+			if (recognition) {
+				recognition.stop();
+				recognition = null;
+			}
+			updateRec();
+		}
+		function switchRecognition() {
+			if (recognition) {
+				stopRecognition();
+			} else {
+				startRecognition();
+			}
+		}
+		function setInput(text) {
+			$("#input").val(text); 
+			send();
+		}
+		function updateRec() {
+			$("#rec").text(recognition ? "Stop" : "Speak");
+		}
+		function send() {
+			var text = $("#input").val();
+			setResponse("You : " + text);
+			$.ajax({
+				type: "POST",
+				url: baseUrl + "query?v=20150910",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				headers: {
+					"Authorization": "Bearer " + accessToken
+				},
+				data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
+				success: function(data) {
+					setResponse("TrashTalk : " + data.result.fulfillment.speech); // Add 
+				},
+				error: function() {
+					setResponse("Internal Server Error");
+				}
+			}); 
+			setResponse("Loading...");
+		}
+		function setResponse(val) {
+			$("#response").text(val);
+			
+			 if(val == "Loading...")
+			{}
+			else
+			transcript.push(val); <!-- -->
+			
+			speak(val);
+			
+			
+			
+				
+		}
+		
+		function speak(string){
+var utterance = new SpeechSynthesisUtterance();
+utterance.voice = speechSynthesis.getVoices().filter(function(voice){return voice.name == "Junior";})[0];
+utterance.text = string;
+utterance.lang = "en-US";
+utterance.volume = 1; //0-1 interval
+utterance.rate = 1;
+utterance.pitch = 2; //0-2 interval
+speechSynthesis.speak(utterance);
+} 
+		
+	/*	 var htmlMeinObj = {
+		
+		htmlMeinFunc : function()
+		{
+		    var stringContainingFullTranscript = "Start";
+			
+			for(int i = 0; i<2;i++)
+			{
+			stringContainingFullTranscript = stringContainingFullTranscript + transcript[i];
+			}
+			
+			
+			alert("sending");
+			obj.passed(stringContainingFullTranscript);
+		}
+		};
+		
+		*/
+		
+		
+		
+		
+		<!-- -->
+		<!-- --> 
+		
+	</script>
+</body>
+</html>
