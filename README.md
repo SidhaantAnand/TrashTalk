@@ -70,5 +70,5 @@ return_neighbours(current_state,T) {
 
 &nbsp; &nbsp; return neighbour
 
- - Update the cost function to include a penalty: This can be done to discourage the selecting of solutions for which total duration is greater than T by adding a penalty. One ways this can be done is as follows
+ - Update the cost function to include a penalty: This can be done to discourage the selecting of solutions for which total duration is greater than T by adding a penalty. One way this can be done is as follows
 	 - Update Cost function from max(all truck durations) to max(durations) > T ? max(durations) + penalty : max(durations). Thus what this means is that if the total duration is greater than T then we would add a penalty to the cost such that the delta c becomes very high and the probability of the candidate being selected becomes marginal
