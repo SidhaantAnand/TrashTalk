@@ -23,17 +23,17 @@ current_paths <- initial state <br />
 
 Loop while current_temperature > minimum_temperature <br /> 
 
-&nbsp; Loop for a predefined number of iterations <br /> 
+&nbsp; &nbsp; Loop for a predefined number of iterations <br /> 
 
-&nbsp;&nbsp;  Define new_paths using the above defined neighbouring function <br /> 
+&nbsp; &nbsp; &nbsp; Define new_paths using the above defined neighbouring function <br /> 
 
- &nbsp;&nbsp; Get cost using the cost function <br /> 
+ &nbsp; &nbsp; &nbsp; Get cost using the cost function <br /> 
  
- &nbsp;&nbsp; If the cost of new_paths is lesser than cost of current_paths  then current_paths  is updated to new_paths <br /> 
+ &nbsp; &nbsp; &nbsp; If the cost of new_paths is lesser than cost of current_paths  then current_paths  is updated to new_paths <br /> 
  
- &nbsp;&nbsp; Else, a random number is generated and if it is less than exp(-difference in cost/current_temperature) then current_paths  is updated to new_paths <br /> 
+ &nbsp; &nbsp; &nbsp; Else, a random number is generated and if it is less than exp(-difference in cost/current_temperature) then current_paths  is updated to new_paths <br /> 
  
- &nbsp; update current_temperature <- current_temperature - alpha <br /> 
+ &nbsp; &nbsp; update current_temperature <- current_temperature - alpha <br /> 
 
 
 # Complexity Analysis
