@@ -57,11 +57,17 @@ Loop while current_temperature > minimum_temperature <br />
 
 There are two ways of handling this
  - Define feasibilty and apply death penalty: In this case we will define a feasible candidate or state to be such that its cost function returns a total duration less than T. In case the value is greater than T, the state or candidate is deemed infeasible and ignored. To implement this, we can make changes to our neighbour function as follows:
+ 
 return_neighbours(current_state,T) {
+
 &nbsp; &nbsp; neighbour = get_neighbours(current_state)
+
 &nbsp; &nbsp; while (cost(neighbour) > T) {
+
 &nbsp; &nbsp; &nbsp; &nbsp; neighbour = get_neighbours(current_state)
+
 &nbsp; &nbsp; }
+
 &nbsp; &nbsp; return neighbour
 
  - Update the cost function to include a penalty: This can be done to discourage the selecting of solutions for which total duration is greater than T by adding a penalty. One ways this can be done is as follows
